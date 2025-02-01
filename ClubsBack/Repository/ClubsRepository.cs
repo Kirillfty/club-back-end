@@ -27,7 +27,21 @@ namespace ClubsBack.Repository
 
             }
         }
-
+        public bool Delete(int id)
+        {
+            using (SqliteConnection conn = new SqliteConnection(_options.Connect))
+            {
+                int result = conn.Execute("DELETE FROM Clubs WHERE id = @id",new { id = id });
+                if (result != 0)
+                {
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
+            }
+        }
         public bool ExitClub(int id)
         {
             throw new NotImplementedException();

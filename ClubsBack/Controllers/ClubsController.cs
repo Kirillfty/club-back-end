@@ -17,5 +17,29 @@ namespace ClubsBack.Controllers
         public List<Clubs> Get() {
             return _repository.Get();
         }
+        public ActionResult Post([FromBody] Clubs user)
+        {
+            if (_repository.CreateClub(user) == true)
+            {
+                return Ok();
+            }
+            else
+            {
+                return BadRequest();
+            }
+        }
+
+        [HttpDelete("{id:int}")]
+        public ActionResult Delete([FromRoute] int id)
+        {
+            if (_repository.Delete(id) == true)
+            {
+                return Ok();
+            }
+            else
+            {
+                return BadRequest();
+            }
+        }
     }
 }

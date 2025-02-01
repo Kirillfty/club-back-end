@@ -13,5 +13,6 @@
         public Item? SignClub(int id);
 
         public bool ExitClub(int id);
+        public bool Delete(int id);
     }
 }
