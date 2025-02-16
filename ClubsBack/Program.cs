@@ -10,7 +10,7 @@ namespace ClubsBack
         public static void Main(string[] args)
         {
             var builder = WebApplication.CreateBuilder(args);
-
+            builder.Services.AddMediatR(configuration => configuration.RegisterServicesFromAssembly(typeof(Program).Assembly));
 
 
             builder.Services.AddControllers();
