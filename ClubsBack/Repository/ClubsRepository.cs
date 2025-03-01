@@ -44,7 +44,17 @@ namespace ClubsBack.Repository
         }
         public bool ExitClub(int id)
         {
-            throw new NotImplementedException();
+            using (SqliteConnection conn = new SqliteConnection(_options.Connect)) { 
+                int result =  conn.Execute(@"DELETE FROM ClubUsers WHERE Id = @Id", new {Id = id});
+                if (result != 0)
+                {
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
+            }
         }
 
         public List<Clubs> Get()
@@ -62,9 +72,23 @@ namespace ClubsBack.Repository
             }
         }
 
-        public Clubs? SignClub(int id)
+        public bool SignClub(int clubId, int userId)
         {
-            throw new NotImplementedException();
+            using (SqliteConnection conn = new SqliteConnection(_options.Connect))
+            {
+                int result = conn.Execute("INSERT INTO ClubsUsers (clubId, userId) VALUES (@clubId, @userId)", new { clubId, userId });
+
+                if (result != 0)
+                {
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
+                
+            }
+
         }
 
         public bool Update(Clubs item)

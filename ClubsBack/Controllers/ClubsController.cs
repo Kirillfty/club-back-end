@@ -41,5 +41,30 @@ namespace ClubsBack.Controllers
                 return BadRequest();
             }
         }
+        public record ClubId(int clubId,int userId);
+        [HttpPost]
+        public ActionResult Post([FromBody]  ClubId clubId)
+        {
+            if (_repository.SignClub(clubId.clubId,clubId.userId) == true)
+            {
+                return Ok();
+            }
+            else
+            {
+                return BadRequest();
+            }
+        }
+        [HttpDelete("{id:int}")]
+        public ActionResult ExitClubs([FromRoute] int id)
+        {
+            if (_repository.ExitClub(id) == true)
+            {
+                return Ok();
+            }
+            else
+            {
+                return BadRequest();
+            }
+        }
     }
 }

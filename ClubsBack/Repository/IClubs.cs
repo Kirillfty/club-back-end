@@ -10,7 +10,7 @@
 
         public bool Update(Item item);
 
-        public Item? SignClub(int id);
+        public bool SignClub(int clubId,int userId);
 
         public bool ExitClub(int id);
         public bool Delete(int id);
