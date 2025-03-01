@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace ClubsBack.Controllers
 {
     [ApiController]
-    [Route("/[controller]")]
+    [Route("[controller]")]
     public class ClubsController  : ControllerBase
     {
         private IClubs<Clubs> _repository;
@@ -17,6 +17,8 @@ namespace ClubsBack.Controllers
         public List<Clubs> Get() {
             return _repository.Get();
         }
+        [HttpPost]
+        [Route("create")]
         public ActionResult Post([FromBody] Clubs user)
         {
             if (_repository.CreateClub(user) == true)
@@ -43,7 +45,7 @@ namespace ClubsBack.Controllers
         }
         public record ClubId(int clubId,int userId);
         [HttpPost]
-        public ActionResult Post([FromBody]  ClubId clubId)
+        public ActionResult Signclub([FromBody]  ClubId clubId)
         {
             if (_repository.SignClub(clubId.clubId,clubId.userId) == true)
             {
@@ -54,7 +56,8 @@ namespace ClubsBack.Controllers
                 return BadRequest();
             }
         }
-        [HttpDelete("{id:int}")]
+        [HttpDelete("exit-club/{id:int}")]
+       
         public ActionResult ExitClubs([FromRoute] int id)
         {
             if (_repository.ExitClub(id) == true)

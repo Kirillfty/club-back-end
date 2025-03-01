@@ -45,7 +45,7 @@ namespace ClubsBack.Repository
         {
             using (SqliteConnection conn = new SqliteConnection(_options.Connect))
             {
-                int result = conn.Execute("INSERT INTO Users (firstName, lastName, nickName ,password) VALUES (@firstName, @lastName, @nickName,password)", item);
+                int result = conn.Execute("INSERT INTO Users (firstName, lastName, nickName ,password) VALUES (@firstName, @lastName, @nickName,@password)", item);
                 if (result != 0)
                 {
                     return true;
