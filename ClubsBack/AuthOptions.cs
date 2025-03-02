@@ -1,7 +1,7 @@
 ﻿using Microsoft.IdentityModel.Tokens;
 using System.Text;
 
-namespace TwitterBackend
+namespace ClubsBack
 {
     public class AuthOptions
     {

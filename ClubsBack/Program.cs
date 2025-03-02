@@ -2,6 +2,7 @@
 using ClubsBack.Entities;
 using ClubsBack.Repository;
 using Microsoft.Extensions.Hosting;
+using TwitterBackend;
 
 namespace ClubsBack
 {
@@ -12,7 +13,12 @@ namespace ClubsBack
             var builder = WebApplication.CreateBuilder(args);
             builder.Services.AddMediatR(configuration => configuration.RegisterServicesFromAssembly(typeof(Program).Assembly));
 
-
+            var key = builder.Configuration["AuthOptions:Key"];
+            var issuer = builder.Configuration["AuthOptions:Issuer"];
+            var audience = builder.Configuration["AuthOptions:Audience"];
+            
+            builder.Services.AddTransient<AuthOptions>((_)=>new AuthOptions(issuer, audience, key));
+            builder.Services.AddTransient<JwtCreator>();
             builder.Services.AddControllers();
 
             string conn = builder.Configuration.GetConnectionString("Default");

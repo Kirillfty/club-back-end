@@ -15,6 +15,6 @@
 
         //получение всех
         public List<Item> Get();
-        void SetRefreshToken1(string refreshToken, string nickName);
+        bool SetRefreshToken(string refreshToken, string nickName);
     }
 }

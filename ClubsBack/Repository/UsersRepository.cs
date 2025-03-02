@@ -74,7 +74,7 @@ namespace ClubsBack.Repository
             }
         }
 
-        public bool SetRefreshToken1(string refreshToken, string nickName)
+        public bool SetRefreshToken(string refreshToken, string nickName)
         {
             using (var connection = new SqliteConnection(_options.Connect))
             {
@@ -83,9 +83,6 @@ namespace ClubsBack.Repository
             }
         }
 
-        void IRepository<Users>.SetRefreshToken1(string refreshToken, string nickName)
-        {
-            throw new NotImplementedException();
-        }
+        
     }
 }
