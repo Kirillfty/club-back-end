@@ -52,6 +52,14 @@ namespace TwitterBackend.Controllers
             return new TokenPair(authToken, refreshToken);
         }
 
+        [Authorize]
+        [HttpGet("check")]
+        public ActionResult  CheckLogin()
+        {
+            return Ok();
+
+        }
+
         [HttpPost("register")]
         public ActionResult<TokenPair> Register([FromBody] RegisterRequest registerRequest)
         {

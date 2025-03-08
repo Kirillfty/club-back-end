@@ -5,8 +5,6 @@ VisualStudioVersion = 17.9.34728.123
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ClubsBack", "ClubsBack\ClubsBack.csproj", "{D1599EC3-108D-4A72-89C0-E15BE9222631}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ClubBack.Test", "ClubBack.Test\ClubBack.Test.csproj", "{C4F95FD4-0255-48C8-AED6-9DA7B948A271}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -17,10 +15,6 @@ Global
 		{D1599EC3-108D-4A72-89C0-E15BE9222631}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D1599EC3-108D-4A72-89C0-E15BE9222631}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D1599EC3-108D-4A72-89C0-E15BE9222631}.Release|Any CPU.Build.0 = Release|Any CPU
-		{C4F95FD4-0255-48C8-AED6-9DA7B948A271}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{C4F95FD4-0255-48C8-AED6-9DA7B948A271}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{C4F95FD4-0255-48C8-AED6-9DA7B948A271}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{C4F95FD4-0255-48C8-AED6-9DA7B948A271}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
