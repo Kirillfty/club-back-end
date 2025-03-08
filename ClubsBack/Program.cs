@@ -1,7 +1,9 @@
 
 using ClubsBack.Entities;
 using ClubsBack.Repository;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.Extensions.Hosting;
+using Microsoft.IdentityModel.Tokens;
 using TwitterBackend;
 
 namespace ClubsBack
@@ -12,12 +14,15 @@ namespace ClubsBack
         {
             var builder = WebApplication.CreateBuilder(args);
             builder.Services.AddMediatR(configuration => configuration.RegisterServicesFromAssembly(typeof(Program).Assembly));
-
-            var key = builder.Configuration["AuthOptions:Key"];
-            var issuer = builder.Configuration["AuthOptions:Issuer"];
-            var audience = builder.Configuration["AuthOptions:Audience"];
+            IConfigurationSection authConfiguration = builder.Configuration.GetSection("AuthOptions");
             
-            builder.Services.AddTransient<AuthOptions>((_)=>new AuthOptions(issuer, audience, key));
+            AuthOptions authOptions = new AuthOptions(
+             authConfiguration["ISSUER"] ?? throw new Exception("ISSUER is null!"),
+             authConfiguration["AUDIENCE"] ?? throw new Exception("AUDIENCE is null!"),
+             authConfiguration["KEY"]) ?? throw new Exception("KEY is null!");
+            builder.Services.AddSingleton<AuthOptions>(authOptions);
+
+            
             builder.Services.AddTransient<JwtCreator>();
             builder.Services.AddControllers();
 
@@ -31,10 +36,24 @@ namespace ClubsBack
             }));
             builder.Services.AddTransient<IRepository<Users>, UsersRepository>();
             builder.Services.AddTransient<IClubs<Clubs>, ClubsRepository>();
-
-
+            builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(options =>
+            {
+                options.TokenValidationParameters = new TokenValidationParameters
+                {
+                    ValidateIssuer = true,
+                    ValidIssuer = authOptions.Issuer, //???????? ????????
+                    ValidateAudience = true,
+                    ValidAudience = authOptions.Audience,//???????? ?????????
+                    ValidateLifetime = true,
+                    IssuerSigningKey = authOptions.GetSymmetricKey,
+                    ValidateIssuerSigningKey = true
+                };
+            });
+            builder.Services.AddAuthorization();
             var app = builder.Build();
             app.UseCors("MyPolicy");
+            app.UseAuthentication();
+            app.UseAuthorization();
             // Configure the HTTP request pipeline.
             app.MapControllers();
 

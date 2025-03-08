@@ -13,15 +13,15 @@ namespace TwitterBackend
             _authOptions = authOptions;
         }
 
-        public string Create(string nickName, string role)
+        public string Create(string role,int id)
         {
-            var claims = new List<Claim> { new(ClaimTypes.Name, nickName), new(ClaimTypes.Role, role) };
+            var claims = new List<Claim> { new(ClaimTypes.Role, role), new(ClaimTypes.Name, id.ToString()) };
 
             var jwt = new JwtSecurityToken(
                 issuer: _authOptions.Issuer,
                 audience: _authOptions.Audience,
                 claims: claims,
-                expires: DateTime.UtcNow.Add(TimeSpan.FromMinutes(2)),
+                expires: DateTime.UtcNow.AddMinutes(15),
                 signingCredentials: new SigningCredentials(_authOptions.GetSymmetricKey, SecurityAlgorithms.HmacSha256)
                 );
 

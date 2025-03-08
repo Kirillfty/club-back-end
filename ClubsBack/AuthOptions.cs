@@ -9,6 +9,10 @@ namespace ClubsBack
         public readonly string Audience;
         private readonly string Key;
 
+        public AuthOptions()
+        {
+        }
+
         public AuthOptions(string issuer, string audience, string key)
         {
             Issuer = issuer;
