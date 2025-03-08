@@ -57,7 +57,7 @@ namespace TwitterBackend.Controllers
         public ActionResult  CheckLogin()
         {
             string userName = HttpContext.User.Identity.Name;
-            return Ok();
+            return Ok(userName);
 
         }
 
