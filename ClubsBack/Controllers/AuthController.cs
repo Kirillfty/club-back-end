@@ -54,9 +54,9 @@ namespace TwitterBackend.Controllers
 
         [Authorize]
         [HttpGet("check")]
-        public ActionResult  CheckLogin()
+        public ActionResult<string>  CheckLogin()
         {
-            string userName = HttpContext.User.Identity.Name;
+            string userName = HttpContext.User.Identity!.Name!;
             return Ok(userName);
 
         }
@@ -66,15 +66,19 @@ namespace TwitterBackend.Controllers
         {
             Users newUser = new()
             {
+                
                 nickName = registerRequest.NickName,
                 firstName = registerRequest.FirstName,
                 lastName = registerRequest.LastName,
                 password = registerRequest.Password,
                 Role = "user"
             };
-
-            if (_userRepository.Post(newUser) == false)
+            int? result = _userRepository.Insert(newUser);
+            
+            if (result == null)
                 return BadRequest("User cannot be created");
+            
+            newUser.id = result.Value;
 
             string refreshToken = Guid.NewGuid().ToString();
             

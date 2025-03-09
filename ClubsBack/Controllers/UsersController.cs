@@ -22,7 +22,7 @@ namespace ClubsBack.Controllers
         [HttpPost]
         public ActionResult Post([FromBody] Users user)
         {
-            if (_repository.Post(user) == true)
+            if (_repository.Insert(user) != null)
             {
                 return Ok();
             }
@@ -33,7 +33,7 @@ namespace ClubsBack.Controllers
         }
 
         [HttpGet("{id:int}")]
-        public ActionResult GetById([FromRoute] int id)
+        public ActionResult GetById([FromBody] int id)
         {
             Users? result = _repository.GetById(id);
 
@@ -62,7 +62,7 @@ namespace ClubsBack.Controllers
         [HttpPut]
         public ActionResult Update([FromBody] Users user)
         {
-            if (_repository.Put(user) == true)
+            if (_repository.Update(user) == true)
             {
                 return Ok();
             }

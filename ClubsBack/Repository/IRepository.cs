@@ -2,13 +2,13 @@
 {
     public interface IRepository<Item>
     {
-        public bool Post(Item item);
+        public int? Insert(Item item);
 
         //удаление
         public bool Delete(int id);
 
         //редактирование
-        public bool Put(Item item);
+        public bool Update(Item item);
 
         //получение одного элемента
         public Item? GetById(int id);

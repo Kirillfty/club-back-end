@@ -41,23 +41,25 @@ namespace ClubsBack.Repository
             }
         }
 
-        public bool Post(Users item)
+        public int? Insert(Users item)
         {
             using (SqliteConnection conn = new SqliteConnection(_options.Connect))
             {
                 int result = conn.Execute("INSERT INTO Users (firstName, lastName, nickName ,password,role) VALUES (@firstName, @lastName, @nickName,@password,@Role)", item);
                 if (result != 0)
                 {
-                    return true;
+                   int id = conn.QuerySingle<int>("SELECT last_insert_rowid();");
+                    
+                    return id;
                 }
                 else {
-                    return false;
+                    return null;
                 }
             
             }
         }
 
-        public bool Put(Users item)
+        public bool Update(Users item)
         {
             using (SqliteConnection conn = new SqliteConnection(_options.Connect))
             {
