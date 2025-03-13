@@ -33,7 +33,7 @@ namespace ClubsBack.Controllers
         }
 
         [HttpGet("{id:int}")]
-        public ActionResult GetById([FromBody] int id)
+        public ActionResult GetById([FromRoute] int id)
         {
             Users? result = _repository.GetById(id);
 
