@@ -1,5 +1,6 @@
 ﻿using ClubsBack.Entities;
 using ClubsBack.Repository;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace ClubsBack.Controllers
@@ -19,6 +20,7 @@ namespace ClubsBack.Controllers
         }
         [HttpPost]
         [Route("create")]
+        [Authorize]
         public ActionResult Post([FromBody] Clubs user)
         {
             if (_repository.CreateClub(user) == true)
