@@ -7,15 +7,16 @@ namespace ClubsBack.Controllers
 {
     [ApiController]
     [Route("[controller]")]
-    public class ClubsController  : ControllerBase
+    public class ClubsController : ControllerBase
     {
-        private IClubs<Clubs> _repository;
-        public ClubsController(IClubs<Clubs> usersRepository)
+        private IClubs _repository;
+        public ClubsController(IClubs usersRepository)
         {
             _repository = usersRepository;
         }
         [HttpGet]
-        public List<Clubs> Get() {
+        public List<Clubs> Get()
+        {
             return _repository.Get();
         }
         [HttpPost]
@@ -34,22 +35,33 @@ namespace ClubsBack.Controllers
         }
 
         [HttpDelete("{id:int}")]
+        [Authorize]
         public ActionResult Delete([FromRoute] int id)
         {
-            if (_repository.Delete(id) == true)
+            var user = HttpContext.User.Identity.Name;
+            ClubsUsers clubUsers = new ClubsUsers { userId = int.Parse(user), clubId = id, isAdmin = 1 };
+            if (_repository.CheckUserOwnClub(clubUsers))
             {
-                return Ok();
+                if (_repository.Delete(id) == true)
+                {
+                    return Ok();
+                }
+                else
+                {
+                    return BadRequest();
+                }
             }
-            else
-            {
-                return BadRequest();
+            else{
+                return BadRequest("не прошел проверку на пользователя");
             }
+
+
         }
-        public record ClubId(int clubId,int userId);
+        public record ClubId(int clubId, int userId);
         [HttpPost]
-        public ActionResult Signclub([FromBody]  ClubId clubId)
+        public ActionResult Signclub([FromBody] ClubId clubId)
         {
-            if (_repository.SignClub(clubId.clubId,clubId.userId) == true)
+            if (_repository.SignClub(clubId.clubId, clubId.userId) == true)
             {
                 return Ok();
             }
@@ -59,7 +71,7 @@ namespace ClubsBack.Controllers
             }
         }
         [HttpDelete("exit-club/{id:int}")]
-       
+
         public ActionResult ExitClubs([FromRoute] int id)
         {
             if (_repository.ExitClub(id) == true)

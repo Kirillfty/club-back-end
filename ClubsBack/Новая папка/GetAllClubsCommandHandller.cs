@@ -7,8 +7,8 @@ namespace ClubsBack.Новая_папка
 {
     public class GetAllClubsCommandHandller : IRequestHandler<GetAllClubsCommand, List<Clubs>>
     {
-        private IClubs<Clubs> _repository;
-        public GetAllClubsCommandHandller(IClubs<Clubs> usersRepository)
+        private IClubs _repository;
+        public GetAllClubsCommandHandller(IClubs usersRepository)
         {
             _repository = usersRepository;
         }

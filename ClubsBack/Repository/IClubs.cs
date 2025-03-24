@@ -1,16 +1,18 @@
-﻿namespace ClubsBack.Repository
+﻿using ClubsBack.Entities;
+namespace ClubsBack.Repository
 {
-    public interface IClubs<Item>
+    public interface IClubs
     {
-        public Item? GetById(int id);
+        public Clubs? GetById(int id);
 
-        public List<Item> Get();
+        public List<Clubs> Get();
 
-        public bool CreateClub(Item item);
+        public bool CreateClub(Clubs item);
 
-        public bool Update(Item item);
+        public bool Update(Clubs item);
 
         public bool SignClub(int clubId,int userId);
+        bool CheckUserOwnClub(ClubsUsers item);
 
         public bool ExitClub(int id);
         public bool Delete(int id);

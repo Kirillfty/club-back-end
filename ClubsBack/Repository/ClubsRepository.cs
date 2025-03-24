@@ -4,7 +4,7 @@ using Microsoft.Data.Sqlite;
 
 namespace ClubsBack.Repository
 {
-    public class ClubsRepository : IClubs<Clubs>
+    public class ClubsRepository : IClubs
     {
         private readonly DBconnect _options;
         public ClubsRepository(DBconnect options)
@@ -40,6 +40,18 @@ namespace ClubsBack.Repository
                 {
                     return false;
                 }
+            }
+        }
+        public bool CheckUserOwnClub(ClubsUsers item){
+            using (SqliteConnection conn = new SqliteConnection(_options.Connect)) { 
+                ClubsUsers? result = conn.QueryFirstOrDefault<ClubsUsers>($"SELECT * FROM ClubsUsers WHERE clubId = @clubId AND userId = @userId AND isAdmin = @isAdmin",item);
+                if(result != null){
+                    return true;
+                }
+                else{
+                    return false;
+                }
+                
             }
         }
         public bool ExitClub(int id)
